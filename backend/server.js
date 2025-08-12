@@ -16,7 +16,12 @@ const app = express();
 const server = http.createServer(app);
 const io = socketIo(server, {
   cors: {
-    origin: [process.env.FRONTEND_URL || "http://localhost:3000", "http://localhost:19006"],
+    origin: [
+      process.env.FRONTEND_URL || "http://localhost:3000", 
+      "http://localhost:19006",
+      "https://heartmatch-dhif-git-main-leo206s-projects.vercel.app",
+      "https://heartmatch-dhif.vercel.app"
+    ],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true
   }
@@ -28,7 +33,12 @@ connectDB();
 // Middleware
 app.use(helmet());
 app.use(cors({
-  origin: [process.env.FRONTEND_URL || "http://localhost:3000", "http://localhost:19006"],
+  origin: [
+    process.env.FRONTEND_URL || "http://localhost:3000", 
+    "http://localhost:19006",
+    "https://heartmatch-dhif-git-main-leo206s-projects.vercel.app",
+    "https://heartmatch-dhif.vercel.app"
+  ],
   credentials: true
 }));
 app.use(express.json({ limit: '10mb' }));
