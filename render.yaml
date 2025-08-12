@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: heartmatch-backend
+    name: heartmatch-api
     env: node
     plan: free
     buildCommand: cd backend && npm install
