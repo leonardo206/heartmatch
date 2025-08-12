@@ -14,9 +14,10 @@ NODE_ENV=production
 FRONTEND_URL=https://your-app.vercel.app
 ```
 
-5. **Build Command:** `npm install`
-6. **Start Command:** `npm start`
+5. **Build Command:** `cd backend && npm install`
+6. **Start Command:** `cd backend && npm start`
 7. **Port:** `3001`
+8. **Root Directory:** `backend` (opzionale, se non usi il package.json nella root)
 
 ## Frontend Deploy (Vercel)
 
