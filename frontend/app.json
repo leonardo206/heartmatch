@@ -32,8 +32,7 @@
     "plugins": [
       "expo-location",
       "expo-image-picker",
-      "expo-notifications",
-      "@expo/webpack-config"
+      "expo-notifications"
     ]
   }
 } 
