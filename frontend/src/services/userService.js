@@ -2,7 +2,6 @@ import api from './api';
 
 export const getPotentialMatches = async (latitude, longitude, maxDistance) => {
   try {
-    console.log('Calling getPotentialMatches...');
     const params = {};
     if (latitude && longitude) {
       params.latitude = latitude;
@@ -12,12 +11,9 @@ export const getPotentialMatches = async (latitude, longitude, maxDistance) => {
       params.maxDistance = maxDistance;
     }
 
-    console.log('Request params:', params);
     const response = await api.get('/users/potential-matches', { params });
-    console.log('Response:', response.data);
     return response.data;
   } catch (error) {
-    console.error('getPotentialMatches error:', error);
     throw new Error(error.response?.data?.error || 'Error loading potential matches');
   }
 };
@@ -42,13 +38,9 @@ export const passUser = async (userId) => {
 
 export const getMatches = async () => {
   try {
-    console.log('🔍 Calling getMatches...');
     const response = await api.get('/matches');
-    console.log('📊 Matches response:', response.data);
-    console.log('📊 Number of matches:', response.data.length);
     return response.data;
   } catch (error) {
-    console.error('❌ getMatches error:', error);
     throw new Error(error.response?.data?.error || 'Error loading matches');
   }
 };

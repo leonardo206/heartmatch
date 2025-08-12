@@ -261,11 +261,7 @@ export default function RegisterScreen() {
 
             <TouchableOpacity
               style={[styles.registerButton, isLoading && styles.registerButtonDisabled]}
-              onPress={() => {
-                console.log('Register button pressed!');
-                alert('Register button pressed!');
-                handleRegister();
-              }}
+              onPress={handleRegister}
               disabled={isLoading}
             >
               <Text style={styles.registerButtonText}>

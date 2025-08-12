@@ -16,12 +16,8 @@ api.interceptors.request.use(
   async (config) => {
     try {
       const token = await storage.getItemAsync('userToken');
-      console.log('Token for request:', token ? token.substring(0, 20) + '...' : 'null');
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
-        console.log('Authorization header set');
-      } else {
-        console.log('No token found');
       }
     } catch (error) {
       console.error('Error getting token:', error);

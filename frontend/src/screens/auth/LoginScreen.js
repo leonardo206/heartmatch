@@ -26,24 +26,16 @@ export default function LoginScreen() {
   const { signIn } = useContext(AuthContext);
 
   const handleLogin = async () => {
-    console.log('handleLogin called');
-    console.log('Email:', email);
-    console.log('Password:', password);
-    
     if (!email || !password) {
-      console.log('Email or password missing');
       Alert.alert('Errore', 'Inserisci email e password');
       return;
     }
 
     setIsLoading(true);
     try {
-      console.log('Calling loginUser...');
       const response = await loginUser(email, password);
-      console.log('Login response:', response);
       await signIn(response.token, response.user);
     } catch (error) {
-      console.error('Login error:', error);
       Alert.alert('Errore', error.message || 'Errore durante il login');
     } finally {
       setIsLoading(false);
@@ -109,11 +101,7 @@ export default function LoginScreen() {
 
             <TouchableOpacity
               style={[styles.loginButton, isLoading && styles.loginButtonDisabled]}
-              onPress={() => {
-                console.log('Button pressed!');
-                alert('Button pressed!');
-                handleLogin();
-              }}
+              onPress={handleLogin}
               disabled={isLoading}
             >
               <Text style={styles.loginButtonText}>
