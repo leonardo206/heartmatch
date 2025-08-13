@@ -69,11 +69,22 @@ router.get('/potential-matches', auth, async (req, res) => {
       return otherUserId;
     });
 
-    // Exclude matched users from potential matches
-    if (matchedUserIds.length > 0) {
+    // Get users the current user has already liked or disliked
+    const likedUserIds = currentUser.likes || [];
+    const dislikedUserIds = currentUser.dislikes || [];
+
+    // Combine all users to exclude (matches, likes, dislikes)
+    const excludedUserIds = [
+      ...matchedUserIds,
+      ...likedUserIds,
+      ...dislikedUserIds
+    ];
+
+    // Exclude all these users from potential matches
+    if (excludedUserIds.length > 0) {
       query._id = { 
         $ne: currentUser._id,
-        $nin: matchedUserIds
+        $nin: excludedUserIds
       };
     }
 

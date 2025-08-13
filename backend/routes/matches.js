@@ -108,7 +108,28 @@ router.post('/pass', auth, async (req, res) => {
       return res.status(400).json({ error: 'Target user ID is required' });
     }
 
-    // For now, we just record the pass (could be stored for analytics)
+    // Get current user and target user
+    const currentUser = await User.findById(currentUserId);
+    const targetUser = await User.findById(targetUserId);
+
+    if (!currentUser || !targetUser) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    // Check if user already disliked this target
+    const alreadyDisliked = currentUser.dislikes.some(dislikeId => 
+      dislikeId.toString() === targetUserId.toString()
+    );
+
+    if (!alreadyDisliked) {
+      currentUser.dislikes.push(targetUserId);
+      await currentUser.save();
+      console.log(`❌ Dislike saved: ${currentUser.name} passed on ${targetUser.name}`);
+      console.log(`📊 Current user dislikes:`, currentUser.dislikes);
+    } else {
+      console.log(`ℹ️ User ${currentUser.name} already passed on ${targetUser.name}`);
+    }
+
     res.json({ message: 'Pass recorded' });
 
   } catch (error) {
