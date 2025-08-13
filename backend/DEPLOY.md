@@ -12,6 +12,7 @@ JWT_SECRET=your-super-secret-jwt-key-change-this-in-production
 MONGODB_URI=mongodb+srv://your-username:your-password@your-cluster.mongodb.net/your-database
 NODE_ENV=production
 FRONTEND_URL=https://your-app.vercel.app
+BACKEND_URL=https://your-backend.onrender.com
 ```
 
 5. **Build Command:** `cd backend && npm install`
