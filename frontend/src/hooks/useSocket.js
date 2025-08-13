@@ -1,6 +1,7 @@
 import { useEffect, useState, useContext } from 'react';
 import io from 'socket.io-client';
 import { useAuth } from './useAuth';
+import { currentConfig } from '../config/config';
 
 export const useSocket = () => {
   const [socket, setSocket] = useState(null);
@@ -8,7 +9,7 @@ export const useSocket = () => {
 
   useEffect(() => {
     if (userData?._id) {
-      const newSocket = io('http://localhost:5000', {
+      const newSocket = io(currentConfig.socketUrl, {
         transports: ['websocket'],
       });
 

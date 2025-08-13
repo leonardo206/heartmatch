@@ -1,7 +1,8 @@
 import axios from 'axios';
 import storage from '../utils/storage';
+import { currentConfig } from '../config/config';
 
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://heartmatch-a79y.onrender.com/api';
+const API_BASE_URL = currentConfig.apiUrl;
 
 // Create axios instance with base configuration
 const api = axios.create({
