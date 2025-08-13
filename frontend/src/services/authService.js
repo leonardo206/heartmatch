@@ -48,9 +48,14 @@ export const registerUser = async (userData) => {
 
 export const loginUser = async (email, password) => {
   try {
+    console.log('🔐 LoginUser - Making request to:', `${API_BASE_URL}/auth/login`);
     const response = await api.post('/auth/login', { email, password });
+    console.log('🔐 LoginUser - Response received:', response.data);
+    console.log('🔐 LoginUser - Token exists:', !!response.data.token);
+    console.log('🔐 LoginUser - User data exists:', !!response.data.user);
     return response.data;
   } catch (error) {
+    console.error('❌ LoginUser - Error:', error);
     throw new Error(error.response?.data?.message || error.response?.data?.error || 'Errore durante il login');
   }
 };
