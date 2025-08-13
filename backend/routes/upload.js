@@ -40,7 +40,13 @@ const upload = multer({
 // Upload immagine profilo
 router.post('/profile-image', auth, upload.single('image'), async (req, res) => {
   try {
+    console.log('🔍 Upload - Request received');
+    console.log('🔍 Upload - Files:', req.files);
+    console.log('🔍 Upload - File:', req.file);
+    console.log('🔍 Upload - Body:', req.body);
+    
     if (!req.file) {
+      console.log('❌ Upload - No file received');
       return res.status(400).json({ error: 'No image file provided' });
     }
 
