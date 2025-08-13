@@ -16,7 +16,8 @@ const auth = async (req, res, next) => {
     const decoded = jwt.verify(token, secret);
     console.log('Auth middleware - Decoded token:', decoded);
     
-    const user = await User.findById(decoded.user.id).select('-password');
+    console.log('Auth middleware - Looking for user with ID:', decoded.user._id);
+    const user = await User.findById(decoded.user._id).select('-password');
     console.log('Auth middleware - User found:', user ? 'Yes' : 'No');
     
     if (!user) {
