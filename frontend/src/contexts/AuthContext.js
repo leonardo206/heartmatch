@@ -23,8 +23,13 @@ export const AuthProvider = ({ children }) => {
       const token = await storage.getItemAsync('userToken');
       const storedUserData = await storage.getItemAsync('userData');
       
+      console.log('Loading stored user data:', { token: !!token, storedUserData });
+      
       if (token && storedUserData) {
-        setUserData(JSON.parse(storedUserData));
+        const user = JSON.parse(storedUserData);
+        console.log('Parsed user data:', user);
+        console.log('User ID from storage:', user._id);
+        setUserData(user);
       }
     } catch (error) {
       console.error('Error loading stored user:', error);
@@ -36,6 +41,9 @@ export const AuthProvider = ({ children }) => {
   const signIn = async (token, user) => {
     try {
       console.log('Storing token:', token.substring(0, 20) + '...');
+      console.log('Storing user data:', user);
+      console.log('User ID:', user._id);
+      
       await storage.setItemAsync('userToken', token);
       await storage.setItemAsync('userData', JSON.stringify(user));
       setUserData(user);

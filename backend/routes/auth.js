@@ -37,7 +37,7 @@ router.post('/register', async (req, res) => {
     // Create JWT token
     const payload = {
       user: {
-        id: user.id
+        _id: user._id
       }
     };
 
@@ -50,7 +50,7 @@ router.post('/register', async (req, res) => {
         res.json({
           token,
           user: {
-            id: user.id,
+            _id: user._id,
             email: user.email,
             name: user.name,
             age: user.age,
@@ -99,7 +99,7 @@ router.post('/login', async (req, res) => {
     // Create JWT token
     const payload = {
       user: {
-        id: user.id
+        _id: user._id
       }
     };
 
@@ -112,7 +112,7 @@ router.post('/login', async (req, res) => {
         res.json({
           token,
           user: {
-            id: user.id,
+            _id: user._id,
             email: user.email,
             name: user.name,
             age: user.age,

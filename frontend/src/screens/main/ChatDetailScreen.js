@@ -17,6 +17,8 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { getMessages, sendMessage, markMessagesAsRead } from '../../services/messageService';
 import { useSocket } from '../../hooks/useSocket';
 import { useAuth } from '../../hooks/useAuth';
+import { getUserIdFromToken } from '../../utils/jwt';
+import storage from '../../utils/storage';
 
 export default function ChatDetailScreen() {
   const [messages, setMessages] = useState([]);
@@ -95,21 +97,8 @@ export default function ChatDetailScreen() {
   };
 
   const renderMessage = ({ item, index }) => {
-    // Funzione robusta per identificare i messaggi dell'utente corrente
-    const getCurrentUserId = () => {
-      // Prima prova dai parametri della route
-      if (route.params.currentUserId) {
-        return route.params.currentUserId;
-      }
-      // Poi prova da userData
-      if (userData?._id) {
-        return userData._id;
-      }
-      // Infine prova dal token JWT (se disponibile)
-      return null;
-    };
-
-    const currentUserId = getCurrentUserId();
+    // Identifica i messaggi dell'utente corrente
+    const currentUserId = route.params.currentUserId || userData?._id;
     const isMyMessage = currentUserId && item.sender._id.toString() === currentUserId.toString();
     
     // Debug per capire il problema di allineamento
