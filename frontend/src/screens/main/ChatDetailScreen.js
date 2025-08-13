@@ -91,12 +91,14 @@ export default function ChatDetailScreen() {
     const currentUserId = route.params.currentUserId || userData?._id;
     const isMyMessage = item.sender._id.toString() === currentUserId?.toString();
     
-    // Debug temporaneo
-    console.log('Message alignment:', {
+    // Debug per capire il problema di allineamento
+    console.log('🔍 Message alignment debug:', {
+      messageId: item._id,
       senderId: item.sender._id.toString(),
+      senderName: item.sender.name,
       currentUserId: currentUserId?.toString(),
       isMyMessage: isMyMessage,
-      senderName: item.sender.name
+      messageContent: item.content.substring(0, 20) + '...'
     });
     
     const showDate = index === 0 || 

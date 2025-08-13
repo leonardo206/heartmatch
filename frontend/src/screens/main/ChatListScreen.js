@@ -47,6 +47,13 @@ export default function ChatListScreen() {
   };
 
   const handleChatPress = (match) => {
+    console.log('🚀 Navigating to chat with:', {
+      matchId: match.matchId,
+      user: match.user.name,
+      currentUserId: userData?._id,
+      userDataAvailable: !!userData
+    });
+    
     navigation.navigate('ChatDetail', { 
       matchId: match.matchId, 
       user: match.user,
