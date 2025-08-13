@@ -75,23 +75,16 @@ router.post('/register', async (req, res) => {
 // @access  Public
 router.post('/login', async (req, res) => {
   try {
-    console.log('Login attempt:', { email: req.body.email });
     const { email, password } = req.body;
 
     // Check if user exists
-    console.log('Looking for user with email:', email);
     const user = await User.findOne({ email }).select('+password');
-    console.log('User found:', user ? 'Yes' : 'No');
     if (!user) {
       return res.status(400).json({ message: 'Invalid credentials' });
     }
 
     // Check password
-    console.log('Comparing passwords...');
-    console.log('Input password:', password);
-    console.log('Stored password hash:', user.password ? user.password.substring(0, 20) + '...' : 'null');
     const isMatch = await bcrypt.compare(password, user.password);
-    console.log('Password match:', isMatch);
     if (!isMatch) {
       return res.status(400).json({ message: 'Invalid credentials' });
     }

@@ -17,16 +17,11 @@ api.interceptors.request.use(
   async (config) => {
     try {
       const token = await storage.getItemAsync('userToken');
-      console.log('🔐 API Interceptor - Token exists:', !!token);
-      console.log('🔐 API Interceptor - Request URL:', config.url);
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
-        console.log('🔐 API Interceptor - Authorization header set');
-      } else {
-        console.log('⚠️ API Interceptor - No token found');
       }
     } catch (error) {
-      console.error('❌ API Interceptor - Error getting token:', error);
+      console.error('Error getting token:', error);
     }
     return config;
   },

@@ -23,12 +23,8 @@ export const AuthProvider = ({ children }) => {
       const token = await storage.getItemAsync('userToken');
       const storedUserData = await storage.getItemAsync('userData');
       
-      console.log('Loading stored user data:', { token: !!token, storedUserData });
-      
       if (token && storedUserData) {
         const user = JSON.parse(storedUserData);
-        console.log('Parsed user data:', user);
-        console.log('User ID from storage:', user._id);
         setUserData(user);
       }
     } catch (error) {
@@ -40,22 +36,11 @@ export const AuthProvider = ({ children }) => {
 
   const signIn = async (token, user) => {
     try {
-      console.log('🔐 SignIn - Storing token:', token.substring(0, 20) + '...');
-      console.log('🔐 SignIn - Storing user data:', user);
-      console.log('🔐 SignIn - User ID:', user._id);
-      
       await storage.setItemAsync('userToken', token);
       await storage.setItemAsync('userData', JSON.stringify(user));
       setUserData(user);
-      console.log('✅ Token and user data stored successfully');
-      
-      // Verifica che il token sia stato salvato
-      const savedToken = await storage.getItemAsync('userToken');
-      const savedUserData = await storage.getItemAsync('userData');
-      console.log('🔍 Verification - Saved token exists:', !!savedToken);
-      console.log('🔍 Verification - Saved user data exists:', !!savedUserData);
     } catch (error) {
-      console.error('❌ Error storing user data:', error);
+      console.error('Error storing user data:', error);
       throw error;
     }
   };
