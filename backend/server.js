@@ -19,6 +19,7 @@ const io = socketIo(server, {
     origin: [
       process.env.FRONTEND_URL || "http://localhost:3000", 
       "http://localhost:19006",
+      "http://localhost:8081",
       "https://heartmatch-dhif-git-main-leo206s-projects.vercel.app",
       "https://heartmatch-dhif.vercel.app"
     ],
@@ -36,6 +37,7 @@ app.use(cors({
   origin: [
     process.env.FRONTEND_URL || "http://localhost:3000", 
     "http://localhost:19006",
+    "http://localhost:8081",
     "https://heartmatch-dhif-git-main-leo206s-projects.vercel.app",
     "https://heartmatch-dhif.vercel.app"
   ],
