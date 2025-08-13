@@ -31,6 +31,14 @@ export default function ChatDetailScreen() {
   const { userData } = useAuth();
   const flatListRef = useRef();
 
+  // Debug per verificare i dati dell'utente
+  console.log('🔍 ChatDetailScreen - User data:', {
+    userData: userData,
+    userDataId: userData?._id,
+    routeParams: route.params,
+    routeCurrentUserId: route.params.currentUserId
+  });
+
   useEffect(() => {
     loadMessages();
     markMessagesAsRead(matchId);
@@ -87,9 +95,22 @@ export default function ChatDetailScreen() {
   };
 
   const renderMessage = ({ item, index }) => {
-    // Usa l'ID dal token JWT decodificato
-    const currentUserId = route.params.currentUserId || userData?._id;
-    const isMyMessage = item.sender._id.toString() === currentUserId?.toString();
+    // Funzione robusta per identificare i messaggi dell'utente corrente
+    const getCurrentUserId = () => {
+      // Prima prova dai parametri della route
+      if (route.params.currentUserId) {
+        return route.params.currentUserId;
+      }
+      // Poi prova da userData
+      if (userData?._id) {
+        return userData._id;
+      }
+      // Infine prova dal token JWT (se disponibile)
+      return null;
+    };
+
+    const currentUserId = getCurrentUserId();
+    const isMyMessage = currentUserId && item.sender._id.toString() === currentUserId.toString();
     
     // Debug per capire il problema di allineamento
     console.log('🔍 Message alignment debug:', {
@@ -98,7 +119,9 @@ export default function ChatDetailScreen() {
       senderName: item.sender.name,
       currentUserId: currentUserId?.toString(),
       isMyMessage: isMyMessage,
-      messageContent: item.content.substring(0, 20) + '...'
+      messageContent: item.content.substring(0, 20) + '...',
+      userDataAvailable: !!userData,
+      routeParamsAvailable: !!route.params.currentUserId
     });
     
     const showDate = index === 0 || 
