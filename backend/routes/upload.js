@@ -50,9 +50,10 @@ router.post('/profile-image', auth, upload.single('image'), async (req, res) => 
       return res.status(400).json({ error: 'No image file provided' });
     }
 
-    // Genera l'URL dell'immagine usando l'URL del backend configurato
-    const backendUrl = process.env.BACKEND_URL || `${req.protocol}://${req.get('host')}`;
-    const imageUrl = `${backendUrl}/uploads/${req.file.filename}`;
+    // Genera solo il path relativo dell'immagine
+    const imagePath = `/uploads/${req.file.filename}`;
+    
+    console.log('🔍 Upload - Image path:', imagePath);
     
     // Aggiorna il profilo dell'utente con la nuova immagine
     const User = require('../models/User');
@@ -75,7 +76,7 @@ router.post('/profile-image', auth, upload.single('image'), async (req, res) => 
 
     res.json({
       success: true,
-      imageUrl: imageUrl,
+      imageUrl: imagePath,
       isPrimary: isPrimary,
       message: 'Image uploaded successfully'
     });

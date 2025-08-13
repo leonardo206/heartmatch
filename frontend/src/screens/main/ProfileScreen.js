@@ -14,7 +14,7 @@ import { Ionicons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import { useAuth } from '../../hooks/useAuth';
 import { updateProfile } from '../../services/authService';
-import { uploadProfileImage } from '../../services/uploadService';
+import { uploadProfileImage, getImageUrl } from '../../services/uploadService';
 
 export default function ProfileScreen() {
   const { userData, signOut } = useAuth();
@@ -93,7 +93,7 @@ export default function ProfileScreen() {
           <TouchableOpacity onPress={handleImagePick} disabled={isLoading}>
             <View style={styles.imageContainer}>
               {profile.photos && profile.photos.length > 0 ? (
-                <Image source={{ uri: profile.photos[0] }} style={styles.profileImage} />
+                <Image source={{ uri: getImageUrl(profile.photos[0]) }} style={styles.profileImage} />
               ) : (
                 <View style={styles.placeholderImage}>
                   <Ionicons name="person" size={50} color="#FF6B9D" />

@@ -1,6 +1,20 @@
 import api from './api';
 import { currentConfig } from '../config/config';
 
+// Funzione per costruire l'URL completo dell'immagine
+export const getImageUrl = (imagePath) => {
+  if (!imagePath) return null;
+  
+  // Se è già un URL completo, restituiscilo
+  if (imagePath.startsWith('http://') || imagePath.startsWith('https://')) {
+    return imagePath;
+  }
+  
+  // Altrimenti, costruisci l'URL usando la configurazione corrente
+  const baseUrl = currentConfig.apiUrl.replace('/api', '');
+  return `${baseUrl}${imagePath}`;
+};
+
 export const uploadProfileImage = async (imageUri) => {
   try {
     console.log('🔍 Upload - Image URI:', imageUri);

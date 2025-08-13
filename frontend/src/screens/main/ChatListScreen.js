@@ -15,6 +15,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { getMatches } from '../../services/userService';
 import { useAuth } from '../../hooks/useAuth';
+import { getImageUrl } from '../../services/uploadService';
 
 export default function ChatListScreen() {
   const [matches, setMatches] = useState([]);
@@ -71,7 +72,7 @@ export default function ChatListScreen() {
       >
         <View style={styles.photoContainer}>
           {primaryPhoto ? (
-            <Image source={{ uri: primaryPhoto }} style={styles.photo} />
+            <Image source={{ uri: getImageUrl(primaryPhoto) }} style={styles.photo} />
           ) : (
             <View style={styles.placeholderPhoto}>
               <Ionicons name="person" size={30} color="#ccc" />

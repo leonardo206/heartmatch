@@ -11,6 +11,7 @@ import {
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import { getPotentialMatches, likeUser, passUser } from '../../services/userService';
+import { getImageUrl } from '../../services/uploadService';
 
 const { width, height } = Dimensions.get('window');
 
@@ -125,7 +126,7 @@ export default function SwipeScreen() {
           ) : (
             <Image
               source={{ 
-                uri: currentProfile.photos?.[0] || 'https://picsum.photos/300/400?random=' + currentProfile._id 
+                uri: currentProfile.photos?.[0] ? getImageUrl(currentProfile.photos[0]) : 'https://picsum.photos/300/400?random=' + currentProfile._id 
               }}
               style={[styles.profileImage, { height: imageHeight }]}
               defaultSource={require('../../../assets/icon.png')}
