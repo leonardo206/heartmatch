@@ -14,6 +14,7 @@ import { Ionicons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import { useAuth } from '../../hooks/useAuth';
 import { updateProfile } from '../../services/authService';
+import { uploadProfileImage } from '../../services/uploadService';
 
 export default function ProfileScreen() {
   const { userData, signOut } = useAuth();
@@ -37,12 +38,24 @@ export default function ProfileScreen() {
       });
 
       if (!result.canceled) {
-        // Here you would upload the image to your server
-        console.log('Image selected:', result.assets[0].uri);
+        setIsLoading(true);
+        
+        // Upload l'immagine al server
+        const uploadResult = await uploadProfileImage(result.assets[0].uri);
+        
+        // Aggiorna il profilo locale con la nuova immagine
+        setProfile(prev => ({
+          ...prev,
+          photos: uploadResult.imageUrl ? [uploadResult.imageUrl] : prev.photos
+        }));
+        
+        Alert.alert('Success', 'Image uploaded successfully!');
       }
     } catch (error) {
-      console.error('Error picking image:', error);
-      Alert.alert('Error', 'Failed to pick image');
+      console.error('Error uploading image:', error);
+      Alert.alert('Error', 'Failed to upload image');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -77,10 +90,10 @@ export default function ProfileScreen() {
         </View>
 
         <View style={styles.profileSection}>
-          <TouchableOpacity onPress={handleImagePick}>
+          <TouchableOpacity onPress={handleImagePick} disabled={isLoading}>
             <View style={styles.imageContainer}>
-              {profile.photo ? (
-                <Image source={{ uri: profile.photo }} style={styles.profileImage} />
+              {profile.photos && profile.photos.length > 0 ? (
+                <Image source={{ uri: profile.photos[0] }} style={styles.profileImage} />
               ) : (
                 <View style={styles.placeholderImage}>
                   <Ionicons name="person" size={50} color="#FF6B9D" />
